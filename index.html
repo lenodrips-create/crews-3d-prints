@@ -1,0 +1,242 @@
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/assets/styles-7E2hCpwQ.css" data-precedence="default"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" data-precedence="default"><title>Crews 3-D Prints</title><meta name="author" content="Crews 3-D Prints"><meta name="description" content="Crews 3-D Prints: 3D-printed objects built layer by layer. Browse the prints — a 3D Printed Dragon, a Crab Pen Holder, the Halloween Duck Special Addition, and Floppy Dude — and pick your filament."><meta property="og:title" content="Crews 3-D Prints"><meta property="og:description" content="3D-printed objects built layer by layer. Pick a filament and watch the piece re-tint live."><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><link rel="modulepreload" href="/assets/index-cTFPq3pW.js"><link rel="modulepreload" href="/assets/routes-Bxsiqwxh.js"><link rel="icon" href="/favicon.ico" type="image/x-icon"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<style>
+	#lovable-badge {
+		--badge-bg: #1b1b1b;
+		--badge-text: #c5c1b9;
+		--badge-text-hover: #dcdad5;
+		--badge-radius: 6px;
+		--badge-padding: 8px;
+		--badge-gap: 6px;
+		--badge-shadow: 
+			0 0 0 1px rgba(0, 0, 0, 0.88),
+			0 1px 0 0 rgba(0, 0, 0, 0.04),
+			0 2px 2px -1px rgba(0, 0, 0, 0.08),
+			0 4px 4px -2px rgba(0, 0, 0, 0.08),
+			0 8px 8px -4px rgba(0, 0, 0, 0.08),
+			0 16px 16px -8px rgba(0, 0, 0, 0.08);
+		--badge-transition-duration: 0.2s;
+		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+		--focus-color: #575ECF;
+		--focus-offset: 2px;
+		--focus-width: 2px;
+		
+		position: fixed;
+		bottom: 12px;
+		right: 12px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		z-index: 1000000;
+		background-color: var(--badge-bg) !important;
+		color: var(--badge-text) !important;
+		border-radius: var(--badge-radius);
+		box-shadow: var(--badge-shadow) !important;
+		font-size: 12px;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400 !important;
+		text-transform: none !important;
+		font-feature-settings: normal !important;
+		transform: translateZ(0);
+		will-change: transform, opacity;
+		transition: opacity var(--badge-transition-duration) var(--badge-transition-easing);
+	}
+
+	#lovable-badge.closing {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	#lovable-badge-cta {
+		display: flex;
+		align-items: baseline;
+		gap: var(--badge-gap);
+		box-sizing: border-box;
+		padding: 4px var(--badge-padding) 0;
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-cta:hover {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--badge-text-hover);
+	}
+
+	#lovable-badge-cta:active {
+		transform: scale(0.98);
+	}
+
+	#lovable-badge-cta:focus {
+		outline: none;
+	}
+
+	#lovable-badge-cta:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: var(--focus-offset);
+		z-index: 1;
+	}
+
+	#lovable-badge-text {
+		line-height: 1;
+	}
+
+	/* The wordmark baseline sits at y=12 of the 16px logo; an empty 12px box
+	   makes that the flex baseline so the text aligns to it on any system font. */
+	#lovable-badge-logo {
+		position: relative;
+		display: block;
+		width: 52px;
+		height: 12px;
+	}
+
+	#lovable-badge-logo svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	#lovable-badge-divider {
+		width: 1px;
+		height: 24px;
+		background-color: rgba(255, 255, 255, 0.04);
+		flex-shrink: 0;
+	}
+
+	#lovable-badge-close {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+		flex-shrink: 0;
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-close:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	#lovable-badge-close:active {
+		transform: scale(0.92);
+	}
+
+	#lovable-badge-close:focus {
+		outline: none;
+	}
+
+	#lovable-badge-close:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: calc(var(--focus-offset) * -1);
+		z-index: 1;
+	}
+
+	#lovable-badge-close svg path {
+		fill: var(--badge-text);
+		transition: fill var(--badge-transition-duration) ease;
+	}
+
+	#lovable-badge-close:hover svg path {
+		fill: var(--badge-text-hover);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#lovable-badge,
+		#lovable-badge-cta,
+		#lovable-badge-close,
+		#lovable-badge-close svg path {
+			transition: none;
+		}
+		
+		#lovable-badge-cta:active,
+		#lovable-badge-close:active {
+			transform: none;
+		}
+	}
+
+	@media (prefers-contrast: high) {
+		#lovable-badge {
+			--badge-bg: #000;
+			--badge-text: #fff;
+			--badge-text-hover: #fff;
+			border: 2px solid currentColor;
+		}
+		
+		#lovable-badge-cta:focus-visible,
+		#lovable-badge-close:focus-visible {
+			outline-width: 3px;
+		}
+	}
+</style>
+<script defer="" src="/~flock.js" data-proxy-url="/~api/analytics"></script><script defer="" src="/__l5e/events.124894084da8c432.js" data-artifact-kind="dwl_content_hash" data-artifact-id="988b0e839f3afe6f0ffe62d490b0cb0f5bbf43b4f5db9f59427645660be8fe75" data-commit-sha="ec7f8234417367084b876a0e156bc19bfe34e950" data-context-token="v1.eyJwcm9qZWN0X2lkIjoibG92cF8wc2pqMTY4cHZrOGJtdnc3eTlyNDZwcXAyNSIsImFydGlmYWN0X2tpbmQiOiJkd2xfY29udGVudF9oYXNoIiwiYXJ0aWZhY3RfaWQiOiI5ODhiMGU4MzlmM2FmZTZmMGZmZTYyZDQ5MGIwY2IwZjViYmY0M2I0ZjVkYjlmNTk0Mjc2NDU2NjBiZThmZTc1IiwiY29tbWl0X3NoYSI6ImVjN2Y4MjM0NDE3MzY3MDg0Yjg3NmEwZTE1NmJjMTliZmUzNGU5NTAiLCJleHAiOjE3OTQ4NTk2ODN9.qK95uk1A5WS7v507JneWuANMmIRmd4Llc4shXhqerrg"></script><meta name="twitter:title" content="Crews 3-D Prints"><meta name="twitter:description" content="3D-printed objects built layer by layer. Pick a filament and watch the piece re-tint live."><meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_0sjj168pvk8bmvw7y9r46pqp25/19a45827b2e68145cdba468ea05bbd5f_1792242396231.png"><meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_0sjj168pvk8bmvw7y9r46pqp25/19a45827b2e68145cdba468ea05bbd5f_1792242396231.png"></head><body><!--$--><div class="min-h-screen overflow-x-hidden bg-ink font-body text-paper"><nav class="sticky top-0 z-50 border-b border-line/60 bg-ink/85 backdrop-blur-md"><div class="flex items-center justify-between px-4 py-3"><div class="flex items-center gap-2"><span class="fc-glow-anim size-2.5 rounded-full bg-fil"></span><span class="font-display text-lg font-700 uppercase tracking-tight">Crews 3-D Prints</span></div><div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-dim"><a href="#secret-code" class="rounded-md border border-fil/60 bg-fil/10 px-3 py-1.5 font-display text-[11px] font-600 uppercase tracking-wide text-fil transition-colors hover:bg-fil hover:text-ink">Code</a><span class="text-fil">Bag</span></div></div></nav><header class="topo relative px-4 pb-10 pt-12"><div class="sheen absolute -right-10 top-6 size-56 rotate-[28deg] rounded-2xl bg-glass/70 ring-1 ring-white/10"></div><div class="absolute -left-8 top-40 size-32 rotate-[28deg] rounded-xl bg-glass/60 ring-1 ring-white/5"></div><div class="relative"><p class="fc-draw-anim font-mono text-[10px] uppercase tracking-[0.28em] text-fil">Extruder 0.4mm · Layer 0001</p><h1 class="fc-draw-anim mt-3 font-display font-700 text-[clamp(2.8rem,15vw,4.6rem)] uppercase leading-[0.82] tracking-tight"><span class="block">lennons the hackers</span><span class="fc-draw-anim block text-fil" style="animation-delay:120ms">3-D Prints</span></h1><p class="fc-rise-anim mt-4 max-w-[30ch] text-pretty text-sm text-dim" style="animation-delay:320ms">Objects printed in a workshop that never sleeps. Pick a filament, watch the piece re-tint live.</p><div class="fc-rise-anim mt-6 flex items-center gap-3" style="animation-delay:440ms"><a href="#featured" class="inline-flex items-center gap-2 rounded-md bg-fil px-4 py-2.5 font-display text-sm font-600 uppercase tracking-wide text-ink transition-colors hover:bg-hot">hire better secuity</a><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">4 prints · 8 filaments</span></div></div></header><section id="featured" class="px-4 py-8"><div class="mb-5 flex items-end justify-between"><h2 class="font-display font-600 text-2xl uppercase tracking-tight">Featured</h2><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">(a) hot picks</span></div><article class="fc-rise-anim mb-5 overflow-hidden rounded-xl bg-panel ring-1 ring-black/5" style="animation-delay:80ms"><div class="relative"><div class="relative aspect-[4/3] w-full overflow-hidden bg-glass"><div class="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full blur-3xl transition-colors duration-500" style="background-color:#ff5a1f;opacity:0.45"></div></div><div class="absolute rounded px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] transition-colors duration-500 ring-1 ring-black/30 left-3 top-3" style="background-color:#ff5a1f;color:#f4f1ec">In stock</div></div><div class="border-t border-line/50 p-4"><div class="flex items-baseline justify-between gap-2"><h3 class="font-display font-600 text-lg uppercase tracking-tight">3D Printed Dragon</h3><span class="font-mono text-xs transition-colors duration-500" style="color:#ff5a1f">$<!-- -->5</span></div><p class="mt-1 text-pretty text-sm text-dim">Articulated spine, 214 layers.</p><div class="mt-4 flex items-center justify-between gap-3"><span class="font-mono text-[10px] uppercase tracking-[0.18em] text-dim">Filament · <!-- -->Orange</span><div class="flex items-center gap-2"><button type="button" aria-label="Select Black filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#141414;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Yellow filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#f2c200;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Gray filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#8a8d90;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Green filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#3fae4d;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Orange filament" aria-pressed="true" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#ff5a1f;outline-color:#ff5a1f;outline-width:2px;box-shadow:0 0 14px 2px #ff5a1faa"></button><button type="button" aria-label="Select Red filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#d21f1f;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Blue filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#1668e3;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Mystery filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#2a2a30;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"><span class="font-display text-[11px] font-700 leading-none text-paper" aria-hidden="true">?</span></button></div></div></div></article><article class="fc-rise-anim mb-5 overflow-hidden rounded-xl bg-panel ring-1 ring-black/5" style="animation-delay:160ms"><div class="relative"><div class="relative aspect-[4/3] w-full overflow-hidden bg-glass"><div class="pointer-events-none absolute inset-0 transition-colors duration-500" style="background-color:#ff5a1f;mix-blend-mode:color;opacity:0.85"></div><div class="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full blur-3xl transition-colors duration-500" style="background-color:#ff5a1f;opacity:0.45"></div></div><div class="absolute rounded px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] transition-colors duration-500 ring-1 ring-black/30 left-3 top-3" style="background-color:#ff5a1f;color:#f4f1ec">Best seller</div></div><div class="border-t border-line/50 p-4"><div class="flex items-baseline justify-between gap-2"><h3 class="font-display font-600 text-lg uppercase tracking-tight">Crab Pen Holder</h3><span class="font-mono text-xs transition-colors duration-500" style="color:#ff5a1f">$<!-- -->5</span></div><p class="mt-1 text-pretty text-sm text-dim">Claw grips six pens. Weighted base, no wobble.</p><div class="mt-4 flex items-center justify-between gap-3"><span class="font-mono text-[10px] uppercase tracking-[0.18em] text-dim">Filament · <!-- -->Orange</span><div class="flex items-center gap-2"><button type="button" aria-label="Select Black filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#141414;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Yellow filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#f2c200;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Gray filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#8a8d90;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Green filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#3fae4d;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Orange filament" aria-pressed="true" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#ff5a1f;outline-color:#ff5a1f;outline-width:2px;box-shadow:0 0 14px 2px #ff5a1faa"></button><button type="button" aria-label="Select Red filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#d21f1f;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Blue filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#1668e3;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Mystery filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#2a2a30;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"><span class="font-display text-[11px] font-700 leading-none text-paper" aria-hidden="true">?</span></button></div></div></div></article><article class="fc-rise-anim mb-5 overflow-hidden rounded-xl bg-panel ring-1 ring-black/5" style="animation-delay:240ms"><div class="relative"><div class="relative aspect-[4/3] w-full overflow-hidden bg-glass"><img src="/__l5e/assets-v1/f5439729-7131-46bd-a9d2-8d9ec0f3caf5/floppy-dude.jpeg" alt="Floppy Dude" width="1024" height="1024" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.04]"><div class="pointer-events-none absolute inset-0 transition-colors duration-500" style="background-color:#ff5a1f;mix-blend-mode:color;opacity:0.85"></div><div class="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full blur-3xl transition-colors duration-500" style="background-color:#ff5a1f;opacity:0.45"></div></div><div class="absolute rounded px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] transition-colors duration-500 ring-1 ring-black/30 left-3 top-3" style="background-color:#ff5a1f;color:#f4f1ec">New</div></div><div class="border-t border-line/50 p-4"><div class="flex items-baseline justify-between gap-2"><h3 class="font-display font-600 text-lg uppercase tracking-tight">Floppy Dude</h3><span class="font-mono text-xs transition-colors duration-500" style="color:#ff5a1f">$<!-- -->5</span></div><p class="mt-1 text-pretty text-sm text-dim">This guy is super floppy.</p><div class="mt-4 flex items-center justify-between gap-3"><span class="font-mono text-[10px] uppercase tracking-[0.18em] text-dim">Filament · <!-- -->Orange</span><div class="flex items-center gap-2"><button type="button" aria-label="Select Black filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#141414;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Yellow filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#f2c200;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Gray filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#8a8d90;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Green filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#3fae4d;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Orange filament" aria-pressed="true" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#ff5a1f;outline-color:#ff5a1f;outline-width:2px;box-shadow:0 0 14px 2px #ff5a1faa"></button><button type="button" aria-label="Select Red filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#d21f1f;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Blue filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#1668e3;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Mystery filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#2a2a30;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"><span class="font-display text-[11px] font-700 leading-none text-paper" aria-hidden="true">?</span></button></div></div></div></article><article class="fc-rise-anim mb-5 overflow-hidden rounded-xl bg-panel ring-1 ring-black/5 hx-frame" style="animation-delay:320ms"><div class="relative"><div class="relative aspect-[4/3] w-full overflow-hidden bg-glass"><img src="/__l5e/assets-v1/7bb14526-71a1-4658-8800-3dc82f50bd3a/halloween-duck.jpg" alt="Halloween Duck Special Addition" width="1024" height="1024" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.04]"><div class="pointer-events-none absolute inset-0 transition-colors duration-500" style="background-color:#ff5a1f;mix-blend-mode:color;opacity:0.85"></div><div class="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full blur-3xl transition-colors duration-500" style="background-color:#ff5a1f;opacity:0.45"></div><div class="hx-art pointer-events-none absolute inset-0" aria-hidden="true"><div class="hx-carved-border absolute inset-0"></div><div class="hx-inner-border absolute inset-3 rounded-sm border border-fil/40"></div><svg viewBox="0 0 80 80" class="absolute right-3 top-3 size-20 rotate-90 opacity-70" fill="none" stroke="var(--color-fil)" stroke-width=".7" aria-hidden="true"><path d="M0 0 L78 5 M0 0 L72 30 M0 0 L55 55 M0 0 L30 72 M0 0 L5 78"></path><path d="M19 1 Q14 10 18 8 Q11 12 14 14 Q9 15 8 18 Q4 14 1 19 M38 2 Q28 14 36 15 Q24 23 27 27 Q18 29 15 36 Q7 28 2 38 M57 4 Q42 22 54 23 Q37 35 41 41 Q27 43 23 54 Q11 42 4 57 M76 5 Q57 31 72 30 Q49 46 55 55 Q36 58 30 72 Q15 57 5 76"></path><path d="M55 55 V69"></path><ellipse cx="55" cy="72" rx="2.5" ry="3.5" fill="var(--color-fil)"></ellipse><path d="M53 71 L49 68 M53 72 L48 73 M53 74 L49 77 M57 71 L61 68 M57 72 L62 73 M57 74 L61 77"></path></svg><svg viewBox="0 0 80 80" class="absolute bottom-3 left-3 size-16 -rotate-90 opacity-50" fill="none" stroke="var(--color-fil)" stroke-width=".7" aria-hidden="true"><path d="M0 0 L78 5 M0 0 L72 30 M0 0 L55 55 M0 0 L30 72 M0 0 L5 78"></path><path d="M19 1 Q14 10 18 8 Q11 12 14 14 Q9 15 8 18 Q4 14 1 19 M38 2 Q28 14 36 15 Q24 23 27 27 Q18 29 15 36 Q7 28 2 38 M57 4 Q42 22 54 23 Q37 35 41 41 Q27 43 23 54 Q11 42 4 57 M76 5 Q57 31 72 30 Q49 46 55 55 Q36 58 30 72 Q15 57 5 76"></path><path d="M55 55 V69"></path><ellipse cx="55" cy="72" rx="2.5" ry="3.5" fill="var(--color-fil)"></ellipse><path d="M53 71 L49 68 M53 72 L48 73 M53 74 L49 77 M57 71 L61 68 M57 72 L62 73 M57 74 L61 77"></path></svg><svg viewBox="0 0 72 36" class="hx-bat absolute left-[42%] top-2 w-14 -rotate-12" aria-hidden="true"><path d="M35 13 L31 5 L30 15 C22 13 14 3 2 2 C7 9 6 15 2 20 C12 16 14 20 16 25 C23 21 27 26 30 30 L36 34 L42 30 C45 26 49 21 56 25 C58 20 60 16 70 20 C66 15 65 9 70 2 C58 3 50 13 42 15 L41 5 L37 13Z" fill="var(--color-ink)" stroke="var(--color-fil)" stroke-width="1"></path></svg><svg viewBox="0 0 72 36" class="hx-bat hx-bat-delayed absolute bottom-5 right-4 w-11 rotate-12" aria-hidden="true"><path d="M35 13 L31 5 L30 15 C22 13 14 3 2 2 C7 9 6 15 2 20 C12 16 14 20 16 25 C23 21 27 26 30 30 L36 34 L42 30 C45 26 49 21 56 25 C58 20 60 16 70 20 C66 15 65 9 70 2 C58 3 50 13 42 15 L41 5 L37 13Z" fill="var(--color-ink)" stroke="var(--color-fil)" stroke-width="1"></path></svg><svg viewBox="0 0 64 64" class="hx-pumpkin absolute bottom-1 left-1 size-14" aria-hidden="true"><path d="M31 15 Q29 7 37 5 L41 8 Q33 10 35 17" fill="var(--color-fil)"></path><path d="M32 18 C12 7 2 27 9 45 C14 60 27 57 32 55 C39 59 53 57 57 42 C63 24 50 9 32 18Z" fill="var(--color-fil)" stroke="var(--color-hot)" stroke-width="1.5"></path><path d="M26 19 Q15 34 24 53 M38 19 Q48 36 40 54" fill="none" stroke="var(--color-ink)" stroke-opacity=".25" stroke-width="2"></path><path d="M17 32 L26 25 L29 35Z M36 35 L40 25 L49 32Z M29 42 L33 36 L37 42Z M17 43 L24 46 L25 42 L30 48 L35 48 L40 42 L42 46 L49 42 Q42 57 29 52 Q20 50 17 43Z" fill="var(--color-ink)"></path></svg><svg viewBox="0 0 64 64" class="hx-pumpkin absolute bottom-1 right-14 size-9 -rotate-12" aria-hidden="true"><path d="M31 15 Q29 7 37 5 L41 8 Q33 10 35 17" fill="var(--color-fil)"></path><path d="M32 18 C12 7 2 27 9 45 C14 60 27 57 32 55 C39 59 53 57 57 42 C63 24 50 9 32 18Z" fill="var(--color-fil)" stroke="var(--color-hot)" stroke-width="1.5"></path><path d="M26 19 Q15 34 24 53 M38 19 Q48 36 40 54" fill="none" stroke="var(--color-ink)" stroke-opacity=".25" stroke-width="2"></path><path d="M17 32 L26 25 L29 35Z M36 35 L40 25 L49 32Z M29 42 L33 36 L37 42Z M17 43 L24 46 L25 42 L30 48 L35 48 L40 42 L42 46 L49 42 Q42 57 29 52 Q20 50 17 43Z" fill="var(--color-ink)"></path></svg></div></div><div class="absolute rounded px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] transition-colors duration-500 ring-1 ring-black/30 left-5 top-5" style="background-color:#ff5a1f;color:#f4f1ec">New</div></div><div class="border-t border-line/50 p-4"><div class="flex items-baseline justify-between gap-2"><h3 class="font-display font-600 text-lg uppercase tracking-tight">Halloween Duck Special Addition</h3><span class="font-mono text-xs transition-colors duration-500" style="color:#ff5a1f">$<!-- -->5</span></div><p class="mt-1 text-pretty text-sm text-dim">Jack-o'-lantern duck with a pumpkin stem and carved eyes.</p><div class="mt-4 flex items-center justify-between gap-3"><span class="font-mono text-[10px] uppercase tracking-[0.18em] text-dim">Filament · <!-- -->Orange</span><div class="flex items-center gap-2"><button type="button" aria-label="Select Black filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#141414;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Yellow filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#f2c200;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Gray filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#8a8d90;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Green filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#3fae4d;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Orange filament" aria-pressed="true" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#ff5a1f;outline-color:#ff5a1f;outline-width:2px;box-shadow:0 0 14px 2px #ff5a1faa"></button><button type="button" aria-label="Select Red filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#d21f1f;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Blue filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#1668e3;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"></button><button type="button" aria-label="Select Mystery filament" aria-pressed="false" class="grid size-6 place-items-center rounded-full outline outline-offset-2 transition-all duration-200 hover:scale-110" style="background-color:#2a2a30;outline-color:rgba(255,255,255,0.15);outline-width:1px;box-shadow:none"><span class="font-display text-[11px] font-700 leading-none text-paper" aria-hidden="true">?</span></button></div></div></div></article></section><section id="vip" class="px-4 py-8"><div class="overflow-hidden rounded-xl bg-panel ring-1 ring-fil/45 shadow-2xl shadow-fil/15"><div class="topo relative border-b border-fil/30 px-5 py-4"><p class="font-mono text-[10px] uppercase tracking-[0.28em] text-fil">Members only</p><div class="mt-2 flex items-end justify-between gap-3"><h2 class="font-display font-700 text-4xl uppercase leading-none tracking-tight">VIP</h2><span class="font-display font-700 text-4xl leading-none text-fil">$20</span></div></div><ul class="space-y-3 px-5 py-4"><li class="flex items-start gap-3"><span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-fil" aria-hidden="true"></span><div><p class="font-display text-sm font-600 uppercase tracking-tight">Secret leaks</p><p class="mt-0.5 text-pretty text-sm text-dim">Workshop news before it goes public.</p></div></li><li class="flex items-start gap-3"><span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-fil" aria-hidden="true"></span><div><p class="font-display text-sm font-600 uppercase tracking-tight">Special limited edition colors</p><p class="mt-0.5 text-pretty text-sm text-dim">Filament colors only VIPs can pick.</p></div></li><li class="flex items-start gap-3"><span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-fil" aria-hidden="true"></span><div><p class="font-display text-sm font-600 uppercase tracking-tight">Free 3-D prints every two months</p><p class="mt-0.5 text-pretty text-sm text-dim">New free prints unlocked every two months.</p></div></li><li class="flex items-start gap-3"><span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-fil" aria-hidden="true"></span><div><p class="font-display text-sm font-600 uppercase tracking-tight">Leaked footage</p><p class="mt-0.5 text-pretty text-sm text-dim">Watch your print being done, layer by layer.</p></div></li><li class="flex items-start gap-3"><span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-fil" aria-hidden="true"></span><div><p class="font-display text-sm font-600 uppercase tracking-tight">Delivery date</p><p class="mt-0.5 text-pretty text-sm text-dim">Know when your print will be delivered.</p></div></li></ul><div class="border-t border-line/50 px-5 py-4 text-center"><button type="button" class="rounded-md bg-fil px-5 py-2.5 font-display text-sm font-600 uppercase tracking-wide text-ink transition-colors hover:bg-hot">Join VIP — $20</button></div></div></section><section class="px-4 py-8"><div class="rounded-xl border border-line/50 bg-panel/60 p-5 text-center"><h2 class="font-display text-2xl font-600 uppercase tracking-tight">Spin to win</h2><p class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-dim">One spin every 24 hours</p><div class="mt-5 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6"><div class="relative w-64 shrink-0"><div class="absolute left-1/2 -top-1 z-10 -translate-x-1/2 border-x-[10px] border-t-[18px] border-x-transparent border-t-paper" aria-hidden="true"></div><svg viewBox="-105 -105 210 210" class="w-full" style="transform: rotate(2452.5deg); transition: none;"><g><path d="M0 0 L6.123233995736766e-15 -100 A100 100 0 0 1 70.71067811865476 -70.71067811865474 Z" class="fill-fil" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(22.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-ink" font-size="8" font-weight="700">Free 3-D<tspan x="0" dy="9">Print</tspan></text></g><g><path d="M0 0 L70.71067811865476 -70.71067811865474 A100 100 0 0 1 100 0 Z" class="fill-ink" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(67.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-paper" font-size="11" font-weight="700">Nope</text></g><g><path d="M0 0 L100 0 A100 100 0 0 1 70.71067811865476 70.71067811865474 Z" class="fill-fil" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(112.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-ink" font-size="8" font-weight="700">Free 3-D<tspan x="0" dy="9">Print</tspan></text></g><g><path d="M0 0 L70.71067811865476 70.71067811865474 A100 100 0 0 1 6.123233995736766e-15 100 Z" class="fill-ink" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(157.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-paper" font-size="11" font-weight="700">Nope</text></g><g><path d="M0 0 L6.123233995736766e-15 100 A100 100 0 0 1 -70.71067811865474 70.71067811865476 Z" class="fill-fil" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(202.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-ink" font-size="8" font-weight="700">Free 3-D<tspan x="0" dy="9">Print</tspan></text></g><g><path d="M0 0 L-70.71067811865474 70.71067811865476 A100 100 0 0 1 -100 1.2246467991473532e-14 Z" class="fill-ink" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(247.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-paper" font-size="11" font-weight="700">Nope</text></g><g><path d="M0 0 L-100 1.2246467991473532e-14 A100 100 0 0 1 -70.71067811865477 -70.71067811865474 Z" class="fill-fil" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(292.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-ink" font-size="8" font-weight="700">Free 3-D<tspan x="0" dy="9">Print</tspan></text></g><g><path d="M0 0 L-70.71067811865477 -70.71067811865474 A100 100 0 0 1 -1.8369701987210297e-14 -100 Z" class="fill-ink" stroke="currentColor" stroke-opacity="0.2"></path><text transform="rotate(337.5) translate(0 -62) rotate(90)" text-anchor="middle" dominant-baseline="middle" class="font-display uppercase fill-paper" font-size="11" font-weight="700">Nope</text></g><circle r="12" class="fill-panel" stroke="currentColor" stroke-opacity="0.3"></circle></svg></div><p class="max-w-[18ch] rounded-md border border-fil/40 bg-fil/5 px-3 py-2 font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-fil">1<!-- -->% chance of getting a free 3-D print</p></div><button type="button" class="mt-5 rounded-md bg-fil px-5 py-2.5 font-display text-sm font-600 uppercase tracking-wide text-ink transition-colors hover:bg-hot disabled:opacity-50" disabled="">Next spin in 23h 57m</button><p class="fc-rise-anim mt-4 font-display text-3xl font-700 uppercase text-paper">Nope!</p></div></section><section id="secret-code" class="scroll-mt-24 px-4 py-8"><div class="rounded-xl border border-line/50 bg-panel/60 p-5 text-center"><h2 class="font-display text-2xl font-600 uppercase tracking-tight">Secret code</h2><p class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-dim">Know the code? Type it in</p><form class="mx-auto mt-4 flex max-w-xs items-center gap-2"><input type="text" placeholder="Enter code" aria-label="Secret code" class="w-full rounded-md border border-line bg-ink px-3 py-2.5 text-center font-mono text-sm uppercase tracking-[0.2em] text-paper outline-none placeholder:tracking-[0.15em] placeholder:text-dim focus:border-fil" value=""><button type="submit" class="shrink-0 rounded-md bg-fil px-4 py-2.5 font-display text-sm font-600 uppercase tracking-wide text-ink transition-colors hover:bg-hot">Unlock</button></form><p class="fc-rise-anim mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-dim">Wrong code — try again</p><div class="mt-4"><button type="button" aria-label="Refresh the code box" class="inline-flex items-center gap-2 rounded-md border border-fil/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-fil transition-colors hover:bg-fil/10"><span class="inline-block" aria-hidden="true">↻</span>Refresh</button></div></div></section><section class="px-4 pb-2"><div class="rounded-xl border border-line/50 bg-panel/60 p-4"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">Pick a color on any print</p><div class="mt-3 flex flex-wrap gap-2"><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#141414"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Black</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#f2c200"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Yellow</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#8a8d90"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Gray</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#3fae4d"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Green</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#ff5a1f"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Orange</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#d21f1f"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Red</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#1668e3"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Blue</span></div><div class="flex items-center gap-2"><span class="size-4 rounded-full ring-1 ring-white/15" style="background-color:#2a2a30"></span><span class="font-mono text-[10px] uppercase tracking-[0.15em] text-dim">Mystery</span></div></div></div></section><footer class="topo border-t border-line/60 px-4 py-8"><div class="flex items-center gap-2"><span class="fc-glow-anim size-2.5 rounded-full bg-fil"></span><span class="font-display text-lg font-700 uppercase tracking-tight">Crews 3-D Prints</span></div><p class="mt-2 max-w-[32ch] text-pretty text-sm text-dim">Printed in the workshop at night, one glowing layer at a time.</p><div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-dim"><span>Prints</span><span>Filaments</span><span>Lab</span><span>Restock</span></div></footer></div><!--/$--><script type="module" async="" src="/assets/index-cTFPq3pW.js"></script>
+<aside id="lovable-badge" role="complementary" dir="ltr" lang="en" aria-label="Edit with Lovable" class="closing" style="display: none;">
+	<a id="lovable-badge-cta" target="_blank" href="https://lovable.dev/projects/lovp_0sjj168pvk8bmvw7y9r46pqp25?utm_source=lovable-badge" rel="noopener nofollow" aria-label="Edit with Lovable">
+		<span id="lovable-badge-text">Edit with</span>
+		<span id="lovable-badge-logo"><svg xmlns="http://www.w3.org/2000/svg" width="52" height="16" fill="none" viewBox="0 0 52 16">
+  <path fill="#FCFBF8" fill-rule="evenodd" d="M20.318 5.25c.643 0 1.206.14 1.69.418a2.81 2.81 0 0 1 1.118 1.191c.266.513.4 1.115.4 1.807s-.134 1.296-.4 1.812a2.81 2.81 0 0 1-1.118 1.193c-.484.278-1.047.418-1.69.418s-1.208-.14-1.695-.418a2.85 2.85 0 0 1-1.125-1.193c-.262-.516-.393-1.12-.393-1.812s.131-1.294.393-1.807a2.848 2.848 0 0 1 1.125-1.191c.487-.279 1.052-.418 1.695-.418Zm0 1.425c-.27 0-.504.076-.7.228-.193.147-.34.37-.443.67-.102.295-.153.66-.153 1.093 0 .435.05.801.153 1.1.102.3.25.524.443.676.196.147.43.22.7.22.27 0 .502-.073.694-.22.193-.152.341-.375.443-.67.103-.299.153-.667.153-1.106 0-.65-.112-1.145-.337-1.481a1.08 1.08 0 0 0-.953-.51ZM32.7 5.25c.61 0 1.127.1 1.549.3.422.197.74.48.953.849.217.368.325.809.325 1.32v2.704c0 .29.02.562.062.812.044.245.108.4.19.466V12h-1.935a5.895 5.895 0 0 1-.105-.684 7.745 7.745 0 0 1-.02-.228 2.293 2.293 0 0 1-.151.203c-.205.242-.47.437-.793.584-.32.143-.685.215-1.094.215-.406 0-.77-.08-1.094-.24a1.845 1.845 0 0 1-.756-.682 1.984 1.984 0 0 1-.27-1.045c0-.606.178-1.069.535-1.388.356-.324.87-.534 1.542-.633l1.125-.16c.225-.032.403-.074.534-.123a.622.622 0 0 0 .288-.196.549.549 0 0 0 .093-.327.65.65 0 0 0-.11-.367.702.702 0 0 0-.32-.27c-.14-.07-.31-.105-.51-.105-.32 0-.576.083-.768.251-.193.164-.298.39-.314.676h-1.923c.016-.434.147-.82.393-1.155.25-.34.596-.604 1.039-.792.442-.189.954-.283 1.535-.283Zm.99 3.498a.98.98 0 0 1-.215.14 2.49 2.49 0 0 1-.584.178l-.473.092c-.315.061-.553.156-.713.283-.155.127-.233.305-.233.534 0 .23.084.412.252.547.168.135.383.203.645.203s.494-.058.694-.173c.201-.118.355-.282.461-.49.11-.21.166-.448.166-.714v-.6Zm4.526-2.375c.065-.125.138-.243.221-.349.197-.25.437-.44.719-.571.282-.135.6-.203.952-.203.528 0 .988.138 1.377.412.389.275.688.67.896 1.186.21.512.314 1.12.314 1.824 0 .7-.107 1.309-.32 1.825-.213.512-.518.906-.915 1.18-.393.275-.854.412-1.383.412-.352 0-.667-.062-.946-.184a1.832 1.832 0 0 1-.7-.554 2.2 2.2 0 0 1-.234-.383V12h-1.843V3h1.862v3.373Zm1.284.296c-.274 0-.51.085-.707.253-.192.163-.338.397-.436.7a3.376 3.376 0 0 0-.148 1.05c0 .406.05.759.148 1.058.098.299.243.53.436.694.197.164.433.246.707.246.279 0 .512-.082.7-.246.193-.164.336-.395.43-.694.099-.3.148-.652.148-1.058 0-.405-.05-.757-.147-1.056-.095-.299-.238-.53-.43-.694a1.015 1.015 0 0 0-.7-.253Zm9.416-1.419c.602 0 1.136.131 1.604.393.466.262.829.643 1.086 1.143.263.5.394 1.097.394 1.794 0 .25-.002.449-.006.596H47.51c.018.288.071.538.164.75a1.3 1.3 0 0 0 .491.596c.214.13.465.196.757.196.319 0 .583-.082.792-.246.209-.167.34-.403.393-.706h1.862a2.48 2.48 0 0 1-.485 1.235 2.54 2.54 0 0 1-1.051.805c-.439.188-.949.283-1.53.283-.655 0-1.225-.125-1.708-.375a2.672 2.672 0 0 1-1.13-1.143c-.267-.508-.4-1.137-.4-1.887 0-.712.14-1.327.418-1.843a2.86 2.86 0 0 1 1.155-1.186c.491-.27 1.051-.405 1.678-.405Zm-.044 1.345c-.274 0-.516.068-.725.203a1.29 1.29 0 0 0-.479.59 2.045 2.045 0 0 0-.132.498h2.562a1.873 1.873 0 0 0-.138-.602 1.061 1.061 0 0 0-.418-.516 1.243 1.243 0 0 0-.67-.173Z" clip-rule="evenodd"></path>
+  <path fill="#FCFBF8" d="m26.605 9.995 1.342-4.566h1.924L27.628 12h-2.07l-2.33-6.57h1.98l1.397 4.565Zm-13.013.143h2.256c1.632 0 1.421 1.837 1.418 1.861h-5.603V3h1.93v7.138Zm31.516 1.861h-1.862V3h1.862v8.999Z"></path>
+  <path fill="url(#a)" fill-rule="evenodd" d="M2.7 3c1.492 0 2.7 1.192 2.7 2.663v1.012h.9c1.49 0 2.7 1.192 2.7 2.662S7.791 12 6.3 12H0V5.663C0 4.193 1.209 3 2.7 3Z" clip-rule="evenodd"></path>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="matrix(-1.54236 7.07838 -10.231 -2.15602 4.627 5.022)" gradientUnits="userSpaceOnUse">
+      <stop offset=".106" stop-color="#FE7B02"></stop>
+      <stop offset=".394" stop-color="#FE3F21"></stop>
+      <stop offset=".608" stop-color="#F858BC"></stop>
+      <stop offset=".929" stop-color="#575ECF"></stop>
+    </radialGradient>
+  </defs>
+</svg>
+
+</span>
+	</a>
+	
+	<span id="lovable-badge-divider" aria-hidden="true"></span>
+	
+	<button id="lovable-badge-close" aria-label="Dismiss" title="Dismiss" type="button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+			<path d="M10.646 4.646a.5.5 0 1 1 .707.708L8.707 8l2.646 2.646a.5.5 0 1 1-.707.707L8 8.707l-2.646 2.646a.5.5 0 1 1-.708-.707L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708L8 7.293l2.646-2.647Z"></path>
+		</svg>
+	</button>
+</aside>
+<script>
+	(() => {
+		if (window.self !== window.top || navigator.userAgent.includes('puppeteer')) {
+			const badge = document.querySelector('#lovable-badge');
+			if (badge) {
+				badge.style.display = 'none';
+			}
+			return;
+		}
+
+		const closeButton = document.querySelector('#lovable-badge-close');
+		if (closeButton) {
+			closeButton.addEventListener('click', function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				const badge = document.querySelector('#lovable-badge');
+				if (badge) {
+					badge.classList.add('closing');
+					setTimeout(function() {
+						if (badge) {
+							badge.style.display = 'none';
+						}
+					}, 240);
+				}
+			});
+		}
+	})();
+</script>
+</body></html>
