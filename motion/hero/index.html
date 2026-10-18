@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>Crews 3D Prints — hero print</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/slicer.js"></script>
+    <style>
+      @font-face {
+        font-family: "Archivo";
+        src: url("assets/fonts/archivo.woff2") format("woff2");
+        font-weight: 100 900;
+        font-stretch: 62% 125%;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("assets/fonts/jetbrains-mono.woff2") format("woff2");
+        font-weight: 100 800;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #ff5b1f;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: linear-gradient(180deg, #ff6a2c 0%, #ff5b1f 55%, #f9520f 100%);
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        color: #ffffff;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+      }
+      #stage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hud {
+        position: absolute;
+        inset: 0;
+        padding: 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      .hud-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: "Archivo", sans-serif;
+        font-weight: 850;
+        font-stretch: 125%;
+        font-size: 30px;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: #16110d;
+      }
+      .brand svg {
+        display: block;
+        width: 40px;
+        height: 40px;
+      }
+      .job {
+        margin-top: 10px;
+        font-size: 19px;
+        letter-spacing: 0.08em;
+        color: #16110d;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: #16110d;
+        font-size: 20px;
+        letter-spacing: 0.14em;
+        font-weight: 600;
+      }
+      .status i {
+        display: block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ffb08f;
+      }
+      .readouts {
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .readouts .k {
+        display: block;
+        font-size: 18px;
+        letter-spacing: 0.16em;
+        color: #16110d;
+      }
+      .readouts .v {
+        display: block;
+        margin-top: 6px;
+        font-size: 38px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        font-variant-numeric: tabular-nums;
+      }
+      .bar {
+        position: relative;
+        margin-top: 22px;
+        height: 6px;
+        border-radius: 3px;
+        background: rgba(22, 17, 13, 0.18);
+        overflow: hidden;
+      }
+      .bar i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 3px;
+        background: #ffffff;
+        transform-origin: 0 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="hero" data-start="0" data-duration="10" data-width="1080" data-height="1080">
+      <canvas id="stage" width="2160" height="2160"></canvas>
+      <div class="hud">
+        <div class="hud-row">
+          <div>
+            <div class="brand">
+              <svg viewBox="0 0 40 40" aria-hidden="true">
+                <rect x="8" y="4" width="28" height="6" rx="3" fill="#16110d" />
+                <rect x="4" y="12.5" width="16" height="6" rx="3" fill="#16110d" />
+                <rect x="4" y="21.5" width="16" height="6" rx="3" fill="#16110d" />
+                <rect x="8" y="30" width="28" height="6" rx="3" fill="#16110d" />
+              </svg>
+              <span>Crews 3D</span>
+            </div>
+            <div class="job">JOB 0214 · TWIST_VASE.GCODE</div>
+          </div>
+          <div class="status"><i id="status-dot"></i><span id="status">READY</span></div>
+        </div>
+        <div>
+          <div class="readouts">
+            <div><span class="k">LAYER</span><span class="v" id="layer">000/440</span></div>
+            <div><span class="k">Z / MM</span><span class="v" id="z">00.00</span></div>
+            <div><span class="k">NOZZLE</span><span class="v">215°C</span></div>
+            <div><span class="k">ETA</span><span class="v" id="eta">02:14:00</span></div>
+          </div>
+          <div class="bar"><i id="bar"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var S = window.Slicer;
+        var TAU = S.TAU;
+        var LAYERS = 110;
+        var SEG = 120;
+        var START = 15;
+        var BED = { x: 540, y: 776 };
+        var PARK = { x: 880, y: 330 };
+        var TOTAL_SECONDS = 2 * 3600 + 14 * 60;
+
+        var vase = S.part({
+          layers: LAYERS,
+          layerHeight: 4.6,
+          segments: SEG,
+          wall: 7,
+          lit: [255, 252, 248],
+          shadow: [214, 120, 82],
+          ambient: 0.3,
+          specular: 0.38,
+          radius: function (t, th) {
+            var r = S.profile(
+              [
+                [0, 116],
+                [0.3, 166],
+                [0.62, 128],
+                [0.86, 98],
+                [1, 114],
+              ],
+              t,
+            );
+            return r * (1 + 0.075 * Math.cos(6 * (th - 0.95 * t)));
+          },
+        });
+
+        var canvas = document.getElementById("stage");
+        var ctx = canvas.getContext("2d");
+        var el = {
+          status: document.getElementById("status"),
+          dot: document.getElementById("status-dot"),
+          layer: document.getElementById("layer"),
+          z: document.getElementById("z"),
+          eta: document.getElementById("eta"),
+          bar: document.getElementById("bar"),
+        };
+
+        var ease = {
+          inOut2: gsap.parseEase("power2.inOut"),
+          in3: gsap.parseEase("power3.in"),
+          sine: gsap.parseEase("sine.inOut"),
+          out2: gsap.parseEase("power2.out"),
+        };
+        function seg(t, a, b) {
+          return S.clamp01((t - a) / (b - a));
+        }
+        function pad(n, w) {
+          var s = String(n);
+          while (s.length < w) s = "0" + s;
+          return s;
+        }
+        function clock(sec) {
+          sec = Math.max(0, Math.round(sec));
+          return pad(Math.floor(sec / 3600), 2) + ":" + pad(Math.floor((sec % 3600) / 60), 2) + ":" + pad(sec % 60, 2);
+        }
+
+        function render(t) {
+          // Timeline phases (seconds).
+          var approach = ease.inOut2(seg(t, 0, 0.45));
+          var firstLayer = ease.sine(seg(t, 0.45, 1.65));
+          var timelapse = ease.sine(seg(t, 1.65, 7.2));
+          var park = ease.inOut2(seg(t, 7.2, 7.8));
+          var spin = 1.25 * ease.inOut2(seg(t, 7.55, 9.05));
+          var eject = ease.in3(seg(t, 9.1, 9.65));
+          var reset = t >= 9.65;
+
+          var done = 0;
+          var trace = 0;
+          if (t >= 0.45 && t < 1.65) trace = Math.max(0.001, firstLayer);
+          if (t >= 1.65) done = 1 + Math.floor(timelapse * (LAYERS - 1) + 1e-6);
+          if (reset) {
+            done = 0;
+            trace = 0;
+          }
+          var shown = !reset;
+
+          ctx.setTransform(2, 0, 0, 2, 0, 0);
+          ctx.clearRect(0, 0, 1080, 1080);
+
+          S.drawBed(ctx, {
+            x: BED.x,
+            y: BED.y,
+            half: 300,
+            iso: vase.iso,
+            surface: "rgba(255,255,255,0.13)",
+            grid: "rgba(255,255,255,0.12)",
+            outline: "rgba(255,255,255,0.5)",
+            edge: "rgba(120,32,0,0.22)",
+          });
+
+          var ox = BED.x + eject * 760;
+          var nozzle = [PARK.x, PARK.y];
+          if (shown && (done > 0 || trace > 0)) {
+            S.drawShadow(ctx, vase, { x: ox, y: BED.y, color: [120, 30, 0], alpha: 0.32 * (1 - eject) });
+            nozzle = S.drawPart(ctx, vase, {
+              x: ox,
+              y: BED.y,
+              spin: spin,
+              layers: done,
+              trace: trace,
+              traceFrom: START,
+              dpr: 2,
+            });
+          }
+
+          // Toolhead: approach the first point, trace, ride the build up, then park.
+          var startPt = [
+            BED.x + vase.R[START] * Math.cos((START / SEG) * TAU),
+            BED.y + vase.R[START] * Math.sin((START / SEG) * TAU) * vase.iso,
+          ];
+          var head;
+          if (t < 0.45) {
+            head = [PARK.x + (startPt[0] - PARK.x) * approach, PARK.y + (startPt[1] - PARK.y) * approach];
+          } else if (t < 7.2) {
+            head = nozzle;
+          } else {
+            var top = [
+              BED.x + vase.R[LAYERS * SEG + START] * Math.cos((START / SEG) * TAU),
+              BED.y - vase.height + vase.R[LAYERS * SEG + START] * Math.sin((START / SEG) * TAU) * vase.iso,
+            ];
+            head = [top[0] + (PARK.x - top[0]) * park, top[1] + (PARK.y - top[1]) * park];
+          }
+          S.drawToolhead(ctx, head[0], head[1] - 2, {
+            rail: [120, 960],
+            railColor: "rgba(22,17,13,0.92)",
+            glow: t > 0.45 && t < 7.2 ? "rgba(255,240,220,0.95)" : null,
+          });
+
+          // HUD.
+          var printing = t >= 0.45 && t < 7.2;
+          var finished = t >= 7.2 && !reset;
+          var progress = reset ? 0 : t < 1.65 ? (trace > 0 ? 1 / LAYERS : 0) * firstLayer : done / LAYERS;
+          var shownLayer = reset ? 0 : trace > 0 ? 1 : done;
+          el.status.textContent = printing ? "PRINTING" : finished ? "COMPLETE" : "READY";
+          el.dot.style.background = printing ? "#ffffff" : finished ? "#7dffa8" : "#ffb08f";
+          // Each drawn ring stands for four 0.2 mm layers.
+          el.layer.textContent = pad(shownLayer * 4, 3) + "/" + LAYERS * 4;
+          el.z.textContent = pad((shownLayer * 0.8).toFixed(2), 5);
+          el.eta.textContent = clock(TOTAL_SECONDS * (1 - progress));
+          var drain = 1 - ease.out2(seg(t, 9.65, 9.95));
+          el.bar.style.transform = "scaleX(" + (reset ? drain : progress) + ")";
+        }
+
+        // The tween writes the playhead through a setter, so the canvas redraws on every
+        // render of the timeline — including seeks that suppress callbacks.
+        var playhead = {
+          now: 0,
+          get t() {
+            return this.now;
+          },
+          set t(value) {
+            this.now = value;
+            render(value);
+          },
+        };
+        var tl = gsap.timeline({ paused: true });
+        tl.to(playhead, { t: 10, duration: 10, ease: "none" }, 0);
+        render(0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["hero"] = tl;
+      })();
+    </script>
+  </body>
+</html>

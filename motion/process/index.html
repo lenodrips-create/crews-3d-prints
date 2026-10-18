@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>Crews 3D Prints — model, slice, print, ship</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/slicer.js"></script>
+    <style>
+      @font-face {
+        font-family: "Archivo";
+        src: url("assets/fonts/archivo.woff2") format("woff2");
+        font-weight: 100 900;
+        font-stretch: 62% 125%;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("assets/fonts/jetbrains-mono.woff2") format("woff2");
+        font-weight: 100 800;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #f4f1ec;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #f4f1ec;
+        color: #16110d;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+      }
+      #stage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hud {
+        position: absolute;
+        inset: 0;
+        padding: 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      .hud-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .steps {
+        position: relative;
+        width: 560px;
+        height: 72px;
+      }
+      .step {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        font-family: "Archivo", sans-serif;
+        font-weight: 850;
+        font-stretch: 125%;
+        font-size: 60px;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        opacity: 0;
+      }
+      .step b {
+        font-weight: 850;
+        color: #e8470b;
+      }
+      .file {
+        padding-top: 8px;
+        text-align: right;
+        font-size: 19px;
+        letter-spacing: 0.08em;
+        line-height: 1.6;
+        color: #5c544d;
+      }
+      .file strong {
+        display: block;
+        font-weight: 600;
+        color: #16110d;
+      }
+      .rail {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .rail div {
+        font-size: 18px;
+        letter-spacing: 0.16em;
+        color: #756d66;
+      }
+      .rail div.on {
+        color: #16110d;
+      }
+      .track {
+        position: relative;
+        display: block;
+        height: 6px;
+        margin-bottom: 14px;
+        border-radius: 3px;
+        background: rgba(22, 17, 13, 0.1);
+        overflow: hidden;
+      }
+      .track i {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: #ff5b1f;
+        transform-origin: 0 50%;
+      }
+      .stamp {
+        position: absolute;
+        left: 489px;
+        top: 728px;
+        width: 0;
+        height: 0;
+      }
+      .stamp span {
+        position: absolute;
+        left: -170px;
+        top: -46px;
+        display: block;
+        width: 340px;
+        height: 92px;
+        border: 5px solid #e8470b;
+        border-radius: 12px;
+        color: #e8470b;
+        font-family: "Archivo", sans-serif;
+        font-weight: 900;
+        font-stretch: 125%;
+        font-size: 50px;
+        line-height: 82px;
+        text-align: center;
+        letter-spacing: 0.04em;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="process" data-start="0" data-duration="10" data-width="1080" data-height="1080">
+      <canvas id="stage" width="2160" height="2160"></canvas>
+      <div class="stamp"><span id="stamp">SHIPPED</span></div>
+      <div class="hud">
+        <div class="hud-top">
+          <div class="steps">
+            <div class="step" id="step-0"><b>01</b>Model</div>
+            <div class="step" id="step-1"><b>02</b>Slice</div>
+            <div class="step" id="step-2"><b>03</b>Print</div>
+            <div class="step" id="step-3"><b>04</b>Ship</div>
+          </div>
+          <div class="file">
+            <strong id="file">PLANTER_TWIST.STL</strong>
+            <span id="file-meta">12,480 TRIS</span>
+          </div>
+        </div>
+        <div class="rail">
+          <div id="rail-0">
+            <span class="track"><i id="fill-0"></i></span>MODEL
+          </div>
+          <div id="rail-1">
+            <span class="track"><i id="fill-1"></i></span>SLICE
+          </div>
+          <div id="rail-2">
+            <span class="track"><i id="fill-2"></i></span>PRINT
+          </div>
+          <div id="rail-3">
+            <span class="track"><i id="fill-3"></i></span>SHIP
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var S = window.Slicer;
+        var TAU = S.TAU;
+        var LAYERS = 80;
+        var SEG = 120;
+        var LH = 5.2;
+        var BX = 540;
+        var BY = 790;
+        var ISO = 0.36;
+        var INK = [22, 17, 13];
+        var ORANGE = [255, 91, 31];
+        var MONO = '500 19px "JetBrains Mono", ui-monospace, monospace';
+
+        // A twisted, rounded-square planter.
+        var planter = S.part({
+          layers: LAYERS,
+          layerHeight: LH,
+          segments: SEG,
+          wall: 8,
+          iso: ISO,
+          lit: [255, 128, 70],
+          shadow: [170, 42, 4],
+          ambient: 0.28,
+          specular: 0.42,
+          shininess: 34,
+          ridge: 0.06,
+          radius: function (t, th) {
+            var a = th - (Math.PI / 2) * t;
+            var size = 150 - 12 * t;
+            var c = Math.abs(Math.cos(a));
+            var s = Math.abs(Math.sin(a));
+            return size / Math.pow(Math.pow(c, 4) + Math.pow(s, 4), 0.25);
+          },
+        });
+        var H = planter.height;
+
+        var canvas = document.getElementById("stage");
+        var ctx = canvas.getContext("2d");
+        var el = {
+          steps: [0, 1, 2, 3].map(function (i) {
+            return document.getElementById("step-" + i);
+          }),
+          rails: [0, 1, 2, 3].map(function (i) {
+            return document.getElementById("rail-" + i);
+          }),
+          fills: [0, 1, 2, 3].map(function (i) {
+            return document.getElementById("fill-" + i);
+          }),
+          file: document.getElementById("file"),
+          meta: document.getElementById("file-meta"),
+          stamp: document.getElementById("stamp"),
+        };
+
+        var ease = {
+          inOut2: gsap.parseEase("power2.inOut"),
+          inOut3: gsap.parseEase("power3.inOut"),
+          out3: gsap.parseEase("power3.out"),
+          out2: gsap.parseEase("power2.out"),
+          sine: gsap.parseEase("sine.inOut"),
+          back: gsap.parseEase("back.out(2)"),
+        };
+        function seg(t, a, b) {
+          return S.clamp01((t - a) / (b - a));
+        }
+        function lerp(a, b, t) {
+          return a + (b - a) * t;
+        }
+        function pad(n, w) {
+          var s = String(n);
+          while (s.length < w) s = "0" + s;
+          return s;
+        }
+
+        // ---- Box (stage 4) -------------------------------------------------
+        // The box gets a slight oblique shear so its right side shows.
+        var BOX_A = 170;
+        var BOX_H = 270;
+        var SHEAR = 0.3;
+        function pt(X, Y, Z, dx) {
+          return [BX + X - Y * SHEAR + dx, BY - Z + Y * ISO];
+        }
+        function quad(points, fill, stroke) {
+          ctx.beginPath();
+          ctx.moveTo(points[0][0], points[0][1]);
+          for (var i = 1; i < points.length; i++) ctx.lineTo(points[i][0], points[i][1]);
+          ctx.closePath();
+          if (fill) {
+            ctx.fillStyle = fill;
+            ctx.fill();
+          }
+          if (stroke) {
+            ctx.strokeStyle = stroke;
+            ctx.lineWidth = 2.5;
+            ctx.lineJoin = "round";
+            ctx.stroke();
+          }
+        }
+        // A flap hinged along an edge of the box top. phi: 0 = folded out flat, PI = closed.
+        function flap(side, phi, dx) {
+          var a = BOX_A;
+          var L = BOX_A;
+          var c = Math.cos(phi);
+          var s = Math.sin(phi);
+          var pts;
+          if (side === "front" || side === "back") {
+            var dir = side === "front" ? 1 : -1;
+            var y0 = dir * a;
+            var y1 = y0 + dir * L * c;
+            var z1 = BOX_H + L * s;
+            pts = [pt(-a, y0, BOX_H, dx), pt(a, y0, BOX_H, dx), pt(a, y1, z1, dx), pt(-a, y1, z1, dx)];
+          } else {
+            var sx = side === "right" ? 1 : -1;
+            var x0 = sx * a;
+            var x1 = x0 + sx * L * c;
+            var z2 = BOX_H + L * s;
+            pts = [pt(x0, -a, BOX_H, dx), pt(x0, a, BOX_H, dx), pt(x1, a, z2, dx), pt(x1, -a, z2, dx)];
+          }
+          // The inside face shows while the flap is open, the outside once it folds over.
+          quad(pts, phi < Math.PI / 2 ? "#efe7de" : "#ffffff", "#16110d");
+        }
+
+        function drawBoxBack(dx) {
+          var a = BOX_A;
+          // Soft contact shadow.
+          var c = pt(0, 0, 0, dx);
+          ctx.save();
+          ctx.translate(c[0], c[1] + 10);
+          ctx.scale(1, 0.32);
+          var sh = ctx.createRadialGradient(0, 0, a * 0.4, 0, 0, a * 1.7);
+          sh.addColorStop(0, "rgba(22,17,13,0.16)");
+          sh.addColorStop(1, "rgba(22,17,13,0)");
+          ctx.fillStyle = sh;
+          ctx.beginPath();
+          ctx.arc(0, 0, a * 1.7, 0, TAU);
+          ctx.fill();
+          ctx.restore();
+          // The opening: inside walls fall into shadow toward the front.
+          var top = [pt(-a, -a, BOX_H, dx), pt(a, -a, BOX_H, dx), pt(a, a, BOX_H, dx), pt(-a, a, BOX_H, dx)];
+          var g = ctx.createLinearGradient(0, top[0][1], 0, top[2][1]);
+          g.addColorStop(0, "#e6ddd2");
+          g.addColorStop(1, "#a99887");
+          quad(top, g, "#16110d");
+        }
+
+        function drawBoxFront(dx) {
+          var a = BOX_A;
+          quad([pt(a, a, BOX_H, dx), pt(a, -a, BOX_H, dx), pt(a, -a, 0, dx), pt(a, a, 0, dx)], "#e9e1d7", "#16110d");
+          quad([pt(-a, a, BOX_H, dx), pt(a, a, BOX_H, dx), pt(a, a, 0, dx), pt(-a, a, 0, dx)], "#ffffff", "#16110d");
+        }
+
+        // Tape along the seam between the front and back flaps, wrapping down the right side.
+        function drawTape(progress, dx) {
+          if (progress <= 0) return;
+          var a = BOX_A;
+          var w = 28;
+          var along = S.clamp01(progress * 1.4);
+          var x1 = lerp(-a, a, along);
+          quad([pt(-a, -w, BOX_H, dx), pt(x1, -w, BOX_H, dx), pt(x1, w, BOX_H, dx), pt(-a, w, BOX_H, dx)], "#ff5b1f");
+          var down = S.clamp01((progress - 0.7) / 0.3) * 80;
+          if (down > 0)
+            quad(
+              [pt(a, -w, BOX_H, dx), pt(a, w, BOX_H, dx), pt(a, w, BOX_H - down, dx), pt(a, -w, BOX_H - down, dx)],
+              "#e8470b",
+            );
+        }
+
+        function label(text, x, y, alpha, align) {
+          if (alpha <= 0) return;
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          ctx.font = MONO;
+          ctx.fillStyle = "#16110d";
+          ctx.textAlign = align || "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText(text, x, y);
+          ctx.restore();
+        }
+
+        function dims(progress) {
+          if (progress <= 0) return;
+          var a = ease.out3(progress);
+          ctx.save();
+          ctx.strokeStyle = "rgba(22,17,13," + 0.7 * a + ")";
+          ctx.lineWidth = 2;
+          // Height, on the right.
+          var x = BX + 246;
+          var y0 = BY;
+          var y1 = BY - H * a;
+          ctx.beginPath();
+          ctx.moveTo(x, y0);
+          ctx.lineTo(x, y1);
+          ctx.moveTo(x - 10, y0);
+          ctx.lineTo(x + 10, y0);
+          ctx.moveTo(x - 10, y1);
+          ctx.lineTo(x + 10, y1);
+          // Width, above the part.
+          var wy = BY - H - 78;
+          var w = 178 * a;
+          ctx.moveTo(BX - w, wy);
+          ctx.lineTo(BX + w, wy);
+          ctx.moveTo(BX - w, wy - 10);
+          ctx.lineTo(BX - w, wy + 10);
+          ctx.moveTo(BX + w, wy - 10);
+          ctx.lineTo(BX + w, wy + 10);
+          ctx.stroke();
+          ctx.restore();
+          label("H 80.0 MM", x + 22, BY - H / 2, a);
+          label("W 68.5 MM", BX, wy - 28, a, "center");
+        }
+
+        function slicePlane(z, alpha) {
+          if (alpha <= 0) return;
+          var h = 250;
+          var top = BY - z - h * ISO;
+          var bottom = BY - z + h * ISO;
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = "rgba(255,91,31,0.10)";
+          ctx.strokeStyle = "rgba(232,71,11,0.9)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.roundRect(BX - h, top, h * 2, bottom - top, 6);
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+          var layer = Math.round((z / H) * 400);
+          label("Z " + ((z / H) * 80).toFixed(1) + " MM · L" + pad(layer, 3), BX + h + 18, BY - z, alpha);
+        }
+
+        function render(t) {
+          ctx.setTransform(2, 0, 0, 2, 0, 0);
+          ctx.clearRect(0, 0, 1080, 1080);
+
+          // Stage progress.
+          var wire = ease.inOut2(seg(t, 0.15, 1.9));
+          var dimIn = seg(t, 1.4, 2.1) * (1 - seg(t, 2.5, 2.8));
+          var wireAlpha = 1 - 0.85 * seg(t, 2.5, 2.9) - 0.15 * seg(t, 5.0, 5.4);
+          var planeZ = ease.inOut2(seg(t, 2.7, 4.5)) * H;
+          var planeAlpha = seg(t, 2.55, 2.75) * (1 - seg(t, 4.5, 4.85));
+          var print = ease.sine(seg(t, 5.2, 7.2));
+          var headIn = ease.out2(seg(t, 4.85, 5.25));
+          var headOut = ease.inOut2(seg(t, 7.2, 7.55));
+          var bedAlpha = 1 - seg(t, 7.5, 7.9);
+          var lift = ease.inOut2(seg(t, 7.55, 8.1));
+          var boxIn = ease.out3(seg(t, 7.85, 8.45));
+          var lower = ease.inOut3(seg(t, 8.45, 9.0));
+          var sides = ease.inOut2(seg(t, 9.0, 9.3));
+          var back = ease.inOut2(seg(t, 9.15, 9.45));
+          var front = ease.inOut2(seg(t, 9.25, 9.55));
+          var tape = ease.inOut2(seg(t, 9.48, 9.74));
+          var stampIn = seg(t, 9.66, 9.86);
+
+          S.drawBed(ctx, {
+            x: BX,
+            y: BY,
+            half: 300,
+            iso: ISO,
+            alpha: bedAlpha,
+            surface: "rgba(22,17,13,0.045)",
+            grid: "rgba(22,17,13,0.06)",
+            outline: "rgba(22,17,13,0.2)",
+            edge: "rgba(22,17,13,0.08)",
+          });
+
+          var printed = t >= 5.2 ? 1 + Math.floor(print * (LAYERS - 1) + 1e-6) : 0;
+
+          if (t < 7.5) {
+            // Model, slice and print all happen on the bed.
+            S.drawWireframe(ctx, planter, {
+              x: BX,
+              y: BY,
+              progress: wire,
+              alpha: wireAlpha,
+              color: INK,
+              rings: 8,
+              meridians: 16,
+            });
+            dims(dimIn);
+            if (t >= 2.7) {
+              var sliced = t < 5.2 ? Math.floor((planeZ / H) * LAYERS) : LAYERS;
+              var ghost = t < 5.2 ? 1 : 0.55;
+              S.drawContours(ctx, planter, {
+                x: BX,
+                y: BY,
+                from: printed,
+                to: sliced,
+                color: ORANGE,
+                frontAlpha: 0.9 * ghost,
+                backAlpha: 0.28 * ghost,
+                lineWidth: 1.3,
+              });
+              slicePlane(planeZ, planeAlpha);
+            }
+            if (printed > 0) {
+              S.drawShadow(ctx, planter, { x: BX, y: BY, color: [120, 60, 20], alpha: 0.22 });
+              var nozzle = S.drawPart(ctx, planter, { x: BX, y: BY, layers: printed, traceFrom: 18, dpr: 2 });
+              var hx = nozzle[0] + (900 - nozzle[0]) * headOut;
+              var hy = nozzle[1] + (120 - nozzle[1]) * headOut;
+              S.drawToolhead(ctx, hx, hy - 2, {
+                alpha: headIn * (1 - headOut),
+                rail: [140, 940],
+                railColor: "rgba(22,17,13,0.9)",
+                led: "#ff5b1f",
+                glow: headOut < 0.05 ? "rgba(255,170,120,0.9)" : null,
+              });
+              if (headOut < 0.05) label("L" + pad(printed * 5, 3) + "/400 · 215°C", hx + 78, hy - 100, headIn);
+            } else if (t >= 4.85) {
+              S.drawToolhead(ctx, BX + 150, BY - 60 - 200 * (1 - headIn), {
+                alpha: headIn,
+                rail: [140, 940],
+                railColor: "rgba(22,17,13,0.9)",
+                led: "#ff5b1f",
+              });
+            }
+          } else {
+            // Ship: lift, box slides in, part drops in, flaps close, tape, stamp.
+            var dx = -760 * (1 - boxIn);
+            var scale = lerp(1, 0.62, lift);
+            var z = lerp(lerp(0, 290, lift), 6, lower);
+            if (boxIn > 0) {
+              drawBoxBack(dx);
+              if (back < 0.5) flap("back", back * Math.PI, dx);
+            }
+            S.drawShadow(ctx, planter, { x: BX, y: BY, color: [120, 60, 20], alpha: 0.22 * (1 - lift) });
+            S.drawPart(ctx, planter, { x: BX, y: BY - z, scale: scale, layers: LAYERS, traceFrom: 18, dpr: 2 });
+            if (boxIn > 0) {
+              drawBoxFront(dx);
+              flap("left", sides * Math.PI, dx);
+              flap("right", sides * Math.PI, dx);
+              if (back >= 0.5) flap("back", back * Math.PI, dx);
+              flap("front", front * Math.PI, dx);
+              drawTape(tape, dx);
+            }
+          }
+
+          // HUD.
+          var stage = t < 2.5 ? 0 : t < 5 ? 1 : t < 7.5 ? 2 : 3;
+          for (var i = 0; i < 4; i++) {
+            var startT = i * 2.5;
+            var vis =
+              i === 0
+                ? 1 - seg(t, 2.35, 2.5)
+                : seg(t, startT - 0.1, startT + 0.15) * (i === 3 ? 1 : 1 - seg(t, startT + 2.35, startT + 2.5));
+            var y = i === 0 ? -12 * seg(t, 2.35, 2.5) : 16 * (1 - ease.out2(seg(t, startT - 0.1, startT + 0.25)));
+            el.steps[i].style.opacity = vis;
+            el.steps[i].style.transform = "translateY(" + y + "px)";
+            el.fills[i].style.transform = "scaleX(" + seg(t, startT, startT + 2.5) + ")";
+            el.rails[i].className = i === stage ? "on" : "";
+          }
+          el.file.textContent = stage === 0 ? "PLANTER_TWIST.STL" : stage === 3 ? "ORDER #0214" : "PLANTER_TWIST.GCODE";
+          el.meta.textContent =
+            stage === 0
+              ? "12,480 TRIS"
+              : stage === 1
+                ? "400 LAYERS · 0.20 MM"
+                : stage === 2
+                  ? "PLA · 215°C · 2H 14M"
+                  : "PACKED · READY TO GO";
+          el.stamp.style.opacity = stampIn;
+          el.stamp.style.transform = "rotate(-8deg) scale(" + lerp(1.6, 1, ease.back(stampIn)) + ")";
+        }
+
+        // The tween writes the playhead through a setter, so the canvas redraws on every
+        // render of the timeline — including seeks that suppress callbacks.
+        var playhead = {
+          now: 0,
+          get t() {
+            return this.now;
+          },
+          set t(value) {
+            this.now = value;
+            render(value);
+          },
+        };
+        var tl = gsap.timeline({ paused: true });
+        tl.to(playhead, { t: 10, duration: 10, ease: "none" }, 0);
+        render(0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["process"] = tl;
+      })();
+    </script>
+  </body>
+</html>

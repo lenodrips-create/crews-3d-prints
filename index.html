@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crews 3D Prints — printed layer by layer</title>
+    <meta
+      name="description"
+      content="Crews 3D Prints: small-batch 3D-printed dragons, crab pen holders, floppy dudes and a Halloween duck. $5 each, printed to order in the filament you pick."
+    />
+    <meta name="theme-color" content="#ff5b1f" />
+    <meta property="og:title" content="Crews 3D Prints" />
+    <meta property="og:description" content="Odd little objects, printed layer by layer. $5 each, eight filaments." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/img/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+    <script src="assets/vendor/hyperframes-player.js" defer></script>
+    <script src="assets/js/main.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip" href="#prints">Skip to the prints</a>
+
+    <header class="nav" id="nav">
+      <div class="wrap nav-inner">
+        <a class="logo" href="#top" aria-label="Crews 3D Prints, back to top">
+          <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="8" y="4" width="28" height="6" rx="3" />
+            <rect x="4" y="12.5" width="16" height="6" rx="3" />
+            <rect x="4" y="21.5" width="16" height="6" rx="3" />
+            <rect x="8" y="30" width="28" height="6" rx="3" />
+          </svg>
+          <span class="logo-word">Crews</span>
+          <span class="logo-sub">3D Prints</span>
+        </a>
+        <nav class="nav-links" aria-label="Sections">
+          <a href="#prints">Prints</a>
+          <a href="#process">Process</a>
+          <a href="#filament">Filament</a>
+          <a href="#vip">VIP</a>
+          <a href="#custom">Custom</a>
+        </nav>
+        <button class="bag-button" type="button" id="bag-open" aria-haspopup="dialog" aria-controls="bag">
+          Bag <span class="bag-count" id="bag-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- Hero ---------------------------------------------------------------->
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="live-dot" aria-hidden="true"></span> Taking orders · Halloween drop is live
+          </p>
+          <h1 class="hero-title">
+            <span class="line"><span>Printed</span></span>
+            <span class="line"><span class="layered">layer</span></span>
+            <span class="line"><span>by layer.</span></span>
+          </h1>
+          <p class="lede">
+            Dragons that wiggle, a crab that holds your pens, and a duck dressed for Halloween. Every piece is printed
+            to order in the filament you pick. <strong>$5 each.</strong>
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#prints">Shop the prints</a>
+            <a class="btn btn-ghost" href="#custom">Custom order <span aria-hidden="true">→</span></a>
+          </div>
+          <dl class="specs">
+            <div>
+              <dt>Per print</dt>
+              <dd>$5</dd>
+            </div>
+            <div>
+              <dt>Filaments</dt>
+              <dd>8</dd>
+            </div>
+            <div>
+              <dt>Layer height</dt>
+              <dd>0.2 mm</dd>
+            </div>
+            <div>
+              <dt>Workshop</dt>
+              <dd>24/7</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-stage reveal">
+          <div class="stage-frame">
+            <hyperframes-player
+              id="hero-player"
+              src="motion/hero/index.html"
+              poster="assets/img/hero-poster.jpg"
+              width="1080"
+              height="1080"
+              muted
+              audio-locked
+              loop
+              disable-click-to-play
+              assets-loading-ui="none"
+              low-power-idle
+              aria-label="Animation: a vase being 3D printed layer by layer"
+            ></hyperframes-player>
+          </div>
+          <div class="sticker" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <defs><path id="sticker-ring" d="M 100 100 m -74 0 a 74 74 0 1 1 148 0 a 74 74 0 1 1 -148 0" /></defs>
+              <text>
+                <textPath href="#sticker-ring" textLength="462" lengthAdjust="spacing">
+                  Printed to order · Printed to order ·
+                </textPath>
+              </text>
+            </svg>
+            <span>$5</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ticker -------------------------------------------------------------->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Articulated dragons</span><i></i><span>Crab pen holders</span><i></i><span>Floppy dudes</span><i></i
+          ><span>Halloween ducks</span><i></i><span>Custom jobs</span><i></i><span>Articulated dragons</span><i></i
+          ><span>Crab pen holders</span><i></i><span>Floppy dudes</span><i></i><span>Halloween ducks</span><i></i
+          ><span>Custom jobs</span><i></i>
+        </div>
+      </div>
+
+      <!-- Prints -------------------------------------------------------------->
+      <section class="section" id="prints" aria-labelledby="prints-title">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="kicker">(01) The prints</p>
+              <h2 class="section-title" id="prints-title">Four prints.<br />Eight colors.</h2>
+            </div>
+            <p class="section-note">
+              Tap a swatch on any print and it re-prints in that filament, right there. Everything is $5 and made after
+              you order, so nothing sits on a shelf.
+            </p>
+          </div>
+          <div class="grid-prints" id="product-grid"></div>
+        </div>
+      </section>
+
+      <!-- Process ------------------------------------------------------------->
+      <section class="section process" id="process" aria-labelledby="process-title">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="kicker">(02) How it's made</p>
+              <h2 class="section-title" id="process-title">File to<br />finished.</h2>
+            </div>
+            <p class="section-note">Scroll to run the job. Four steps between an idea and the thing on your desk.</p>
+          </div>
+        </div>
+        <div class="process-track" id="process-track">
+          <div class="process-sticky">
+            <div class="wrap process-grid">
+              <ol class="steps" id="steps">
+                <li class="is-active">
+                  <span class="step-num">01</span>
+                  <h3>Model</h3>
+                  <p>
+                    It starts as a 3D file — one of ours, or one you send over. Only have a sketch? We can model it.
+                  </p>
+                </li>
+                <li>
+                  <span class="step-num">02</span>
+                  <h3>Slice</h3>
+                  <p>The model is cut into hundreds of 0.2 mm layers, and each one becomes a path for the nozzle.</p>
+                </li>
+                <li>
+                  <span class="step-num">03</span>
+                  <h3>Print</h3>
+                  <p>
+                    Hot plastic goes down one layer at a time. Small pieces take an hour or two; big ones run overnight.
+                  </p>
+                </li>
+                <li>
+                  <span class="step-num">04</span>
+                  <h3>Ship</h3>
+                  <p>Cleaned up, checked over, packed. Then it's yours.</p>
+                </li>
+              </ol>
+              <div class="process-stage">
+                <div class="stage-frame stage-frame--paper">
+                  <hyperframes-player
+                    id="process-player"
+                    src="motion/process/index.html"
+                    poster="assets/img/process-poster.jpg"
+                    width="1080"
+                    height="1080"
+                    muted
+                    audio-locked
+                    disable-click-to-play
+                    assets-loading-ui="none"
+                    aria-label="Animation: a planter is modelled, sliced, printed and boxed up"
+                  ></hyperframes-player>
+                </div>
+                <div class="scrub" aria-hidden="true"><i id="scrub-fill"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filament ------------------------------------------------------------>
+      <section class="section filament" id="filament" aria-labelledby="filament-title">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="kicker">(03) Filament</p>
+              <h2 class="section-title" id="filament-title">Pick your<br />filament.</h2>
+            </div>
+            <p class="section-note">
+              Eight spools on the shelf. Pick one here and every print on the page switches to it. Mystery means we
+              choose — you find out when it arrives.
+            </p>
+          </div>
+          <div class="spools" id="spools" role="radiogroup" aria-label="Filament for every print"></div>
+        </div>
+      </section>
+
+      <!-- VIP ----------------------------------------------------------------->
+      <section class="section vip" id="vip" aria-labelledby="vip-title">
+        <div class="wrap">
+          <div class="vip-card reveal">
+            <div class="vip-head">
+              <p class="kicker">(04) Members only</p>
+              <h2 class="vip-title" id="vip-title"><span class="layered">VIP</span></h2>
+              <p class="vip-price"><strong>$20</strong> to join</p>
+              <button class="btn btn-ink" type="button" id="vip-join">Join VIP — $20</button>
+            </div>
+            <ol class="perks">
+              <li>
+                <span>01</span>
+                <div>
+                  <h3>Secret leaks</h3>
+                  <p>Workshop news before it goes public.</p>
+                </div>
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <h3>Limited-edition colors</h3>
+                  <p>Filaments only VIPs can pick.</p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <h3>Free prints</h3>
+                  <p>A new free print unlocks every two months.</p>
+                </div>
+              </li>
+              <li>
+                <span>04</span>
+                <div>
+                  <h3>Leaked footage</h3>
+                  <p>Watch your print being made, layer by layer.</p>
+                </div>
+              </li>
+              <li>
+                <span>05</span>
+                <div>
+                  <h3>Delivery date</h3>
+                  <p>Know exactly when your print will turn up.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Spin ---------------------------------------------------------------->
+      <section class="section spin" id="spin" aria-labelledby="spin-title">
+        <div class="wrap spin-grid">
+          <div class="spin-copy">
+            <p class="kicker">(05) Daily spin</p>
+            <h2 class="section-title" id="spin-title">Feeling<br />lucky?</h2>
+            <p class="section-note">
+              Spin for a free print. One spin every 24 hours, and a 1% chance of winning — the odds are bad, the print
+              is good.
+            </p>
+            <button class="btn btn-primary" type="button" id="spin-button">Spin the wheel</button>
+            <p class="spin-result" id="spin-result" aria-live="polite"></p>
+          </div>
+          <div class="wheel-wrap">
+            <div class="wheel-pointer" aria-hidden="true"></div>
+            <svg class="wheel" id="wheel" viewBox="0 0 400 400" role="img" aria-label="Prize wheel"></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Custom -------------------------------------------------------------->
+      <section class="section custom" id="custom" aria-labelledby="custom-title">
+        <div class="wrap custom-grid">
+          <div>
+            <p class="kicker">(06) Custom</p>
+            <h2 class="section-title" id="custom-title">Your idea,<br />printed.</h2>
+            <p class="section-note">
+              Got something in your head? Send a sketch, a photo or a link to a model and pick a color. We'll get back
+              to you with what it takes.
+            </p>
+          </div>
+          <form class="form" id="custom-form" novalidate>
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label class="span-2">
+              <span>What should we print?</span>
+              <textarea
+                name="idea"
+                rows="4"
+                required
+                placeholder="A dragon holding a pencil. A duck, but huge. A link to an STL…"
+              ></textarea>
+            </label>
+            <label>
+              <span>Filament</span>
+              <select name="filament" id="custom-filament"></select>
+            </label>
+            <label>
+              <span>How many</span>
+              <input name="qty" type="number" min="1" max="50" value="1" inputmode="numeric" />
+            </label>
+            <div class="span-2 form-foot">
+              <button class="btn btn-primary" type="submit">Send request</button>
+              <p class="form-status" id="form-status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <p class="footer-word" aria-hidden="true"><span class="layered">Crews</span></p>
+        <div class="footer-row">
+          <p>Printed in the workshop at night, one layer at a time.</p>
+          <nav aria-label="Footer">
+            <a href="#prints">Prints</a>
+            <a href="#process">Process</a>
+            <a href="#filament">Filament</a>
+            <a href="#vip">VIP</a>
+            <a href="#custom">Custom</a>
+          </nav>
+          <p class="footer-meta">© <span id="year">2026</span> Crews 3D Prints · Motion built with HyperFrames</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bag ----------------------------------------------------------------->
+    <div class="scrim" id="scrim" hidden></div>
+    <aside class="bag" id="bag" role="dialog" aria-modal="true" aria-labelledby="bag-title" hidden>
+      <div class="bag-head">
+        <h2 id="bag-title">Your bag</h2>
+        <button class="icon-button" type="button" id="bag-close" aria-label="Close bag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      </div>
+      <ul class="bag-items" id="bag-items"></ul>
+      <div class="bag-foot">
+        <div class="bag-total"><span>Subtotal</span><strong id="bag-total">$0</strong></div>
+        <button class="btn btn-primary btn-block" type="button" id="checkout">Send order</button>
+        <p class="bag-note" id="bag-note">We'll get back to you to confirm the order and how to pay.</p>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
